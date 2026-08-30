@@ -4,12 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/gen-fixtures.mjs",
     "dev": "vite optimize && vite",
+    "prebuild": "node scripts/gen-fixtures.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@deck.gl/core": "^9.3.11",
+    "@deck.gl/extensions": "^9.3.11",
+    "@deck.gl/geo-layers": "^9.3.11",
+    "@deck.gl/layers": "^9.3.11",
+    "@deck.gl/react": "^9.3.11",
     "@tailwindcss/vite": "^4.1.18",
+    "lucide-react": "^1.37.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^4.1.18"
@@ -20,6 +28,7 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^5.1.1",
     "globals": "^16.5.0",
+    "pngjs": "^7.0.0",
     "typescript": "~5.9.3",
     "vite": "^7.2.4",
     "vite-plugin-svgr": "^4.5.0"
