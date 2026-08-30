@@ -37,9 +37,9 @@ function renderBody(info: PickingInfo) {
     const b = feat as BuildingFeature;
     return (
       <div className="space-y-2.5 text-sm">
-        <Row label="Use" value={b.properties.use} icon={<Home className="h-4 w-4 text-amber-300" />} />
+        <Row label="Type" value={b.properties.type} icon={<Home className="h-4 w-4 text-amber-300" />} />
         <Row label="Height" value={`${b.properties.height_ft.toFixed(0)} ft`} />
-        <Row label="Type" value={b.properties.type} />
+        <Row label="Floors" value={String(b.properties.floors)} />
       </div>
     );
   }
@@ -47,8 +47,8 @@ function renderBody(info: PickingInfo) {
   return (
     <div className="space-y-2.5 text-sm">
       <Row label="Complaint" value={c.properties.complaint_type} icon={<MessageSquareWarning className="h-4 w-4 text-rose-300" />} />
-      <Row label="Created" value={c.properties.created_date ?? 'n/a'} />
-      <Row label="Agency" value={c.properties.agency ?? 'n/a'} />
+      <Row label="Descriptor" value={c.properties.descriptor ?? 'n/a'} />
+      <Row label="Borough" value={c.properties.borough ?? 'n/a'} />
     </div>
   );
 }

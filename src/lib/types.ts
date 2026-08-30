@@ -49,6 +49,8 @@ export interface Place {
   zoom: number;
 }
 
+export type Neighborhood = Place;
+
 export interface LayerToggles {
   flood: boolean;
   buildings: boolean;

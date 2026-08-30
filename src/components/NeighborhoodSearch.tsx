@@ -1,6 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import { ChevronDown, MapPin, Search, X } from 'lucide-react';
-import { NEIGHBORHOODS } from '../lib/config';
+import { NEIGHBORHOODS } from '../lib/geo';
 import type { Neighborhood } from '../lib/types';
 
 interface NeighborhoodSearchProps {

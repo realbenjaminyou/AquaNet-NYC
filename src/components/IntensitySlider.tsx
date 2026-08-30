@@ -1,6 +1,5 @@
 import { useId } from 'react';
-import { SCENARIOS } from '../lib/scenarios';
-import { formatIntensity } from '../lib/geo';
+import { INTENSITY_MAX, INTENSITY_MIN, INTENSITY_STEP, formatIntensity } from '../lib/scenarios';
 
 interface IntensitySliderProps {
   value: number;
@@ -26,19 +25,19 @@ export function IntensitySlider({ value, onChange }: IntensitySliderProps) {
       <input
         id={id}
         type="range"
-        min={SCENARIOS[0].value}
-        max={SCENARIOS[SCENARIOS.length - 1].value}
-        step={1}
+        min={INTENSITY_MIN}
+        max={INTENSITY_MAX}
+        step={INTENSITY_STEP}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         aria-valuetext={`${formatIntensity(value)}, a ${
-          value < 6 ? 'minor' : value < 9 ? 'moderate' : 'major'
+          value < 3 ? 'minor' : value < 3.66 ? 'moderate' : 'major'
         } storm`}
         className="w-full accent-cyan-400"
       />
       <div className="mt-1 flex justify-between text-[10px] text-slate-500">
         <span>Rain shower</span>
-        <span>Nor'easter</span>
+        <span>Nor&apos;easter</span>
         <span>Hurricane</span>
       </div>
     </div>

@@ -24,7 +24,7 @@ export function LayerToggles({ toggles, onChange }: LayerTogglesProps) {
       <legend className="mb-1 text-xs font-semibold tracking-wide text-slate-300">
         Map layers
       </legend>
-      {OPTIONS.map((opt, i) => {
+      {OPTIONS.map((opt) => {
         const id = `${baseId}-${opt.key}`;
         return (
           <label key={opt.key} htmlFor={id} className="group flex cursor-pointer items-center gap-2.5">

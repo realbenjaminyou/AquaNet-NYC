@@ -41,3 +41,11 @@ export function searchPlaces(query: string, limit = 6): Place[] {
     .sort((a, b) => a.score - b.score || a.p.name.localeCompare(b.p.name));
   return scored.slice(0, limit).map((x) => x.p);
 }
+
+export function formatDepth(depthFt: number): string {
+  return `${depthFt.toFixed(1)} ft`;
+}
+
+export function formatProbability(p: number): string {
+  return `${Math.round(p * 100)}%`;
+}

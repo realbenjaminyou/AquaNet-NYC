@@ -63,13 +63,15 @@ export function buildMapLayers(input: MapLayersInput): Layer[] {
         opacity: 0.62,
         pickable: false,
         renderSubLayers: (props) => {
-          const {
-            bbox: { west, south, east, north },
-          } = props.tile;
+          const bbox = props.tile.bbox as unknown as {
+            west: number;
+            south: number;
+            east: number;
+            north: number;
+          };
           return new BitmapLayer(props, {
-            data: null,
             image: props.data,
-            bounds: [west, south, east, north],
+            bounds: [bbox.west, bbox.south, bbox.east, bbox.north],
           });
         },
       }),
@@ -85,7 +87,7 @@ export function buildMapLayers(input: MapLayersInput): Layer[] {
       : zones.features.filter((f) => f.properties.scenario === bracket.high);
 
     const zoneLayer = (id: string, data: FloodZoneFeature[], opacity: number) =>
-      new GeoJsonLayer<FloodZoneFeature>({
+      new GeoJsonLayer<FloodZoneFeature['properties']>({
         id,
         data,
         pickable: true,
@@ -112,7 +114,7 @@ export function buildMapLayers(input: MapLayersInput): Layer[] {
   // 4) Building footprints (extruded + draped on terrain).
   if (toggles.buildings && buildings) {
     layers.push(
-      new GeoJsonLayer<BuildingFeature>({
+      new GeoJsonLayer<BuildingFeature['properties']>({
         id: 'buildings',
         data: buildings.features,
         pickable: true,

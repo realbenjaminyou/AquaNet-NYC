@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import DeckGL from '@deck.gl/react';
-import type { Layer, PickingInfo, ViewState } from '@deck.gl/core';
+import type { Layer, PickingInfo, MapViewState } from '@deck.gl/core';
 import { buildMapLayers } from './mapLayers';
 import { formatDepth, formatProbability } from '../lib/geo';
 import type {
@@ -18,8 +18,8 @@ export interface FlyToTarget {
 }
 
 interface FloodMapProps {
-  viewState: ViewState & { pitch?: number; bearing?: number };
-  onViewStateChange: (next: ViewState) => void;
+  viewState: MapViewState;
+  onViewStateChange: (next: MapViewState) => void;
   zones: FeatureCollection<FloodZoneFeature> | null;
   buildings: FeatureCollection<BuildingFeature> | null;
   complaints: FeatureCollection<ComplaintFeature> | null;
@@ -35,7 +35,7 @@ type HoverState = {
   title: string;
 } | null;
 
-const NYC_INITIAL: ViewState & { pitch?: number; bearing?: number } = {
+const NYC_INITIAL: MapViewState = {
   longitude: -73.9857,
   latitude: 40.7484,
   zoom: 11.1,
@@ -71,7 +71,7 @@ function describeHover(info: PickingInfo): HoverState {
       x: info.x,
       y: info.y,
       title: 'Building',
-      lines: [`Use: ${b.properties.use}`, `Height: ${b.properties.height_ft.toFixed(0)} ft`],
+      lines: [`Use: ${b.properties.type}`, `Height: ${b.properties.height_ft.toFixed(0)} ft`],
     };
   }
   if ('complaint_type' in p && typeof p.complaint_type === 'string') {
@@ -92,7 +92,6 @@ function describeHover(info: PickingInfo): HoverState {
 export function FloodMap(props: FloodMapProps) {
   const { viewState, onViewStateChange, onPick } = props;
   const [hover, setHover] = useState<HoverState>(null);
-  const deckRef = useRef<DeckGL>(null);
 
   const layers = useMemo<Layer[]>(
     () =>
@@ -109,10 +108,9 @@ export function FloodMap(props: FloodMapProps) {
   return (
     <div className="absolute inset-0" data-testid="flood-map">
       <DeckGL
-        ref={deckRef}
         initialViewState={NYC_INITIAL}
         viewState={viewState}
-        onViewStateChange={({ viewState: next }) => onViewStateChange(next as ViewState)}
+        onViewStateChange={({ viewState: next }) => onViewStateChange(next as MapViewState)}
         controller={{ dragRotate: true, touchRotate: true, inertia: 250 }}
         layers={layers}
         getTooltip={null}
